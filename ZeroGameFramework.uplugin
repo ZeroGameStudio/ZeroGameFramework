@@ -1,0 +1,31 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "Zero Game Framework",
+	"Description": "Integrates Zero Games plugins and provides a core framework for developing game in Unreal Engine.",
+	"Category": "Gameplay",
+	"CreatedBy": "Zero Games",
+	"CreatedByURL": "https://github.com/ZeroGameStudio/ZeroGameFramework",
+	"DocsURL": "https://github.com/ZeroGameStudio/ZeroGameFramework",
+	"MarketplaceURL": "https://github.com/ZeroGameStudio/ZeroGameFramework",
+	"SupportURL": "https://github.com/ZeroGameStudio/ZeroGameFramework",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "ZeroGameFrameworkRuntime",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
+		{
+			"Name": "ZeroGameFrameworkEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
+
+
