@@ -25,6 +25,20 @@
 			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		},
+		{
+			"Name": "ZSharp",
+			"Enabled": true
+		},
+		{
+			"Name": "ZeroExtensionSystem",
+			"Enabled": true
+		}
 	]
 }
 

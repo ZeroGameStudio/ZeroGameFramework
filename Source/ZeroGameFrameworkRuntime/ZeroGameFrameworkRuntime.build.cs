@@ -35,7 +35,12 @@ public class ZeroGameFrameworkRuntime : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
+				"GameplayTags",
 				"Engine",
+				"AIModule",
+				
+				"ZSharpRuntime",
+				"ZeroExtensionSystemRuntime",
 			}
 		);
 		
