@@ -25,9 +25,10 @@ public:
 	virtual void ZeroExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 	virtual void ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 
-private:
+protected:
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
+	virtual void Tick(float deltaSeconds) override;
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 	
 private:
@@ -35,6 +36,8 @@ private:
 	TSubclassOf<AZeroClientGameControllerBase> ClientGameControllerClass;
 
 private:
+	bool bHasZSharpTick;
+	
 	ZES::FZDeferredExtensionScope ExtensionScope;
 	
 };

@@ -4,6 +4,12 @@
 
 #include "ZActorExtensionHelper.h"
 #include "Actor/ZeroClientGameControllerSubsystem.h"
+#include "Emit/IZSharpFieldRegistry.h"
+
+AZeroClientGameControllerBase::AZeroClientGameControllerBase()
+	: bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
+{
+}
 
 void AZeroClientGameControllerBase::ZeroExtensionScope_RegisterExtender(UZeroExtenderBase* extender, FGameplayTag channel)
 {
@@ -44,6 +50,18 @@ void AZeroClientGameControllerBase::BeginPlay()
 	}
 
 	ZGF::FZActorExtensionHelper::RegisterBeginPlayChannel(this);
+}
+
+void AZeroClientGameControllerBase::Tick(float deltaSeconds)
+{
+	if (bHasZSharpTick)
+	{
+		ReceiveTick(deltaSeconds);
+
+		// No need to process latent actions for native class.
+	}
+	
+	Super::Tick(deltaSeconds);
 }
 
 void AZeroClientGameControllerBase::EndPlay(const EEndPlayReason::Type endPlayReason)

@@ -12,16 +12,23 @@ class ZEROGAMEFRAMEWORKRUNTIME_API AZeroGameplayInfoBase : public AInfo, public 
 	GENERATED_BODY()
 
 public:
+	AZeroGameplayInfoBase();
+
+public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const override;
 
-private:
+protected:
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
+	virtual void Tick(float deltaSeconds) override;
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Extension")
 	bool bExtendable;
+
+private:
+	bool bHasZSharpTick;
 	
 };
 

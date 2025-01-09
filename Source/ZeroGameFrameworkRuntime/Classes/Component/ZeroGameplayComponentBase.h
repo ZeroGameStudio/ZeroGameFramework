@@ -12,6 +12,9 @@ class ZEROGAMEFRAMEWORKRUNTIME_API UZeroGameplayComponentBase : public UActorCom
 	GENERATED_BODY()
 
 public:
+	UZeroGameplayComponentBase();
+
+public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const override;
 
 public:
@@ -23,6 +26,15 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Replication")
 	bool HasAuthority() const;
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction) override;
+	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
+
+private:
+	bool bIsZSharpClass;
+	bool bHasZSharpTick;
 	
 };
 

@@ -4,7 +4,13 @@
 
 #include "EnhancedInputComponent.h"
 #include "ZActorExtensionHelper.h"
+#include "Emit/IZSharpFieldRegistry.h"
 #include "Scope/ZeroExtensionScope.h"
+
+AZeroPawnBase::AZeroPawnBase()
+	: bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
+{
+}
 
 void AZeroPawnBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const
 {
@@ -35,6 +41,18 @@ void AZeroPawnBase::BeginPlay()
 	Super::BeginPlay();
 
 	ZGF::FZActorExtensionHelper::RegisterBeginPlayChannel(this);
+}
+
+void AZeroPawnBase::Tick(float deltaSeconds)
+{
+	if (bHasZSharpTick)
+	{
+		ReceiveTick(deltaSeconds);
+
+		// No need to process latent actions for native class.
+	}
+	
+	Super::Tick(deltaSeconds);
 }
 
 void AZeroPawnBase::EndPlay(const EEndPlayReason::Type endPlayReason)
