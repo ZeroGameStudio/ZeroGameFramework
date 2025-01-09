@@ -2,6 +2,7 @@
 
 #include "Actor/ZeroPlayerControllerBase.h"
 
+#include "EnhancedInputComponent.h"
 #include "ZActorExtensionHelper.h"
 
 void AZeroPlayerControllerBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const
@@ -29,6 +30,16 @@ void AZeroPlayerControllerBase::ZeroExtensionScope_RegisterExtendee(UObject* ext
 void AZeroPlayerControllerBase::ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtendee(extendee, destroying, channel);
+}
+
+void AZeroPlayerControllerBase::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	if (auto component = CastChecked<UEnhancedInputComponent>(InputComponent))
+	{
+		ScriptSetupInputComponent(component);
+	}
 }
 
 void AZeroPlayerControllerBase::PreInitializeComponents()

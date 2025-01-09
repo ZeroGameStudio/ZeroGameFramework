@@ -14,7 +14,13 @@ class ZEROGAMEFRAMEWORKRUNTIME_API AZeroPawnBase : public APawn, public IZSharpR
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const override;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ScriptSetupInputComponent(UEnhancedInputComponent* component);
+
 private:
+	virtual void SetupPlayerInputComponent(UInputComponent* playerInputComponent) override;
+	
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;

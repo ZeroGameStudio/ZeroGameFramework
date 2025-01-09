@@ -36,6 +36,7 @@ public class ZeroGameFrameworkRuntime : ModuleRules
 			{
 				"CoreUObject",
 				"GameplayTags",
+				"EnhancedInput",
 				"Engine",
 				"AIModule",
 				

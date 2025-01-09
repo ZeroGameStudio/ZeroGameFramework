@@ -2,6 +2,7 @@
 
 #include "Actor/ZeroPawnBase.h"
 
+#include "EnhancedInputComponent.h"
 #include "ZActorExtensionHelper.h"
 #include "Scope/ZeroExtensionScope.h"
 
@@ -10,6 +11,16 @@ void AZeroPawnBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLif
 	Super::GetLifetimeReplicatedProps(outLifetimeProps);
 
 	ZSharpReplicatedObject_GetLifetimeReplicatedProps(outLifetimeProps);
+}
+
+void AZeroPawnBase::SetupPlayerInputComponent(UInputComponent* playerInputComponent)
+{
+	Super::SetupPlayerInputComponent(playerInputComponent);
+
+	if (auto component = CastChecked<UEnhancedInputComponent>(playerInputComponent))
+	{
+		ScriptSetupInputComponent(component);
+	}
 }
 
 void AZeroPawnBase::PreInitializeComponents()

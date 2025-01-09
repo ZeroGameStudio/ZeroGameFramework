@@ -22,7 +22,13 @@ public:
 	virtual void ZeroExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 	virtual void ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ScriptSetupInputComponent(UEnhancedInputComponent* component);
+	
 private:
+	virtual void SetupInputComponent() override;
+	
 	virtual void PreInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
