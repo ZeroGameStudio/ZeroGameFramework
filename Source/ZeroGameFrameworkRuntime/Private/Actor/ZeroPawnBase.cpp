@@ -66,7 +66,7 @@ void AZeroPawnBase::PossessedBy(AController* newController)
 {
 	Super::PossessedBy(newController);
 	
-	if (auto scope = Cast<IZExtensionScope>(Controller))
+	if (auto scope = Cast<IZExtensionScope>(newController))
 	{
 		scope->ExtensionScope_RegisterExtendee(this);
 	}
@@ -76,12 +76,13 @@ void AZeroPawnBase::UnPossessed()
 {
 	if (!bPendingDestroy)
 	{
+		// IMPORTANT: This must be done before we call super because we need pointer to old controller.
 		if (auto scope = Cast<IZExtensionScope>(Controller))
 		{
 			scope->ExtensionScope_UnregisterExtendee(this, false);
 		}
 	}
-	
+
 	Super::UnPossessed();
 }
 
