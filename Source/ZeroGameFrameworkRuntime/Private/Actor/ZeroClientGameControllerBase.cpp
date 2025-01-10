@@ -11,12 +11,12 @@ AZeroClientGameControllerBase::AZeroClientGameControllerBase()
 {
 }
 
-void AZeroClientGameControllerBase::ExtensionScope_RegisterExtender(UZExtenderBase* extender, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtender(extender, channel);
 }
 
-void AZeroClientGameControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBase* extender, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtender(extender, channel);
 }

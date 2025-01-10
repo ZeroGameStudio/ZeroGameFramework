@@ -13,12 +13,12 @@ AZeroGameModeBase::AZeroGameModeBase()
 
 }
 
-void AZeroGameModeBase::ExtensionScope_RegisterExtender(UZExtenderBase* extender, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtender(extender, channel);
 }
 
-void AZeroGameModeBase::ExtensionScope_UnregisterExtender(UZExtenderBase* extender, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtender(extender, channel);
 }
