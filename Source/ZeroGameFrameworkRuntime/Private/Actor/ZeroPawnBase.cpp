@@ -88,11 +88,14 @@ void AZeroPawnBase::UnPossessed()
 
 void AZeroPawnBase::DetachFromControllerPendingDestroy()
 {
-	bPendingDestroy = true;
-
-	if (auto scope = Cast<IZExtensionScope>(Controller))
+	if (!bPendingDestroy)
 	{
-		scope->ExtensionScope_UnregisterExtendee(this, true);
+		bPendingDestroy = true;
+
+		if (auto scope = Cast<IZExtensionScope>(Controller))
+		{
+			scope->ExtensionScope_UnregisterExtendee(this, true);
+		}
 	}
 	
 	Super::DetachFromControllerPendingDestroy();
