@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Scope/ZeroExtensionScope.h"
+#include "Scope/ZExtensionScope.h"
 #include "Scope/ZDeferredExtensionScope.h"
 
 #include "ZeroClientGameControllerSubsystem.generated.h"
@@ -20,17 +20,17 @@ namespace ZGF::ZeroClientGameControllerSubsystem_Private
 }
 
 UCLASS(NotBlueprintable)
-class ZEROGAMEFRAMEWORKRUNTIME_API UZeroClientGameControllerSubsystem final : public UWorldSubsystem, public IZeroExtensionScope
+class ZEROGAMEFRAMEWORKRUNTIME_API UZeroClientGameControllerSubsystem final : public UWorldSubsystem, public IZExtensionScope
 {
 	GENERATED_BODY()
 
 	friend ZGF::ZeroClientGameControllerSubsystem_Private::FZSetController;
 
 public:
-	virtual void ZeroExtensionScope_RegisterExtender(UZeroExtenderBase* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
-	virtual void ZeroExtensionScope_UnregisterExtender(UZeroExtenderBase* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
-	virtual void ZeroExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel = FGameplayTag::EmptyTag) override;
-	virtual void ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel = FGameplayTag::EmptyTag) override;
+	virtual void ExtensionScope_RegisterExtender(UZExtenderBase* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
+	virtual void ExtensionScope_UnregisterExtender(UZExtenderBase* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
+	virtual void ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel = FGameplayTag::EmptyTag) override;
+	virtual void ExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 
 public:
 	UFUNCTION(BlueprintPure)

@@ -4,8 +4,8 @@
 
 #include "GameFramework/GameModeBase.h"
 #include "Actor/ZeroClientGameControllerSubsystem.h"
-#include "Extension/ZeroGameExtensionChannels.h"
-#include "Scope/ZeroExtensionSubsystem.h"
+#include "Extension/ZeroGameFrameworkExtensionChannels.h"
+#include "Scope/ZEngineExtensionScope.h"
 
 void ZGF::FZActorExtensionHelper::RegisterInitializeComponentsChannel(AActor* extendee)
 {
@@ -39,18 +39,18 @@ void ZGF::FZActorExtensionHelper::UnregisterOnEndPlay(AActor* extendee)
 
 	if (auto clientGameControllerScope = world->GetSubsystem<UZeroClientGameControllerSubsystem>())
 	{
-		clientGameControllerScope->ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
-		clientGameControllerScope->ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
+		clientGameControllerScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
+		clientGameControllerScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
 	}
 	
-	if (auto gameModeScope = Cast<IZeroExtensionScope>(world->GetAuthGameMode()))
+	if (auto gameModeScope = Cast<IZExtensionScope>(world->GetAuthGameMode()))
 	{
-		gameModeScope->ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
-		gameModeScope->ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
+		gameModeScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
+		gameModeScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
 	}
 
-	UZeroExtensionSubsystem::Get().ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
-	UZeroExtensionSubsystem::Get().ZeroExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
+	UZEngineExtensionScope::Get().ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
+	UZEngineExtensionScope::Get().ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
 }
 
 bool ZGF::FZActorExtensionHelper::IsGameActor(AActor* extendee, UWorld*& world)
@@ -71,16 +71,16 @@ bool ZGF::FZActorExtensionHelper::IsGameActor(AActor* extendee, UWorld*& world)
 
 void ZGF::FZActorExtensionHelper::RegisterExtendee(AActor* extendee, FGameplayTag channel, UWorld* world)
 {
-	UZeroExtensionSubsystem::Get().ZeroExtensionScope_RegisterExtendee(extendee, channel);
+	UZEngineExtensionScope::Get().ExtensionScope_RegisterExtendee(extendee, channel);
 
-	if (auto gameModeScope = Cast<IZeroExtensionScope>(world->GetAuthGameMode()))
+	if (auto gameModeScope = Cast<IZExtensionScope>(world->GetAuthGameMode()))
 	{
-		gameModeScope->ZeroExtensionScope_RegisterExtendee(extendee, channel);
+		gameModeScope->ExtensionScope_RegisterExtendee(extendee, channel);
 	}
 
 	if (auto clientGameControllerScope = world->GetSubsystem<UZeroClientGameControllerSubsystem>())
 	{
-		clientGameControllerScope->ZeroExtensionScope_RegisterExtendee(extendee, channel);
+		clientGameControllerScope->ExtensionScope_RegisterExtendee(extendee, channel);
 	}
 }
 

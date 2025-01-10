@@ -13,22 +13,22 @@ AZeroGameModeBase::AZeroGameModeBase()
 
 }
 
-void AZeroGameModeBase::ZeroExtensionScope_RegisterExtender(UZeroExtenderBase* extender, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_RegisterExtender(UZExtenderBase* extender, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtender(extender, channel);
 }
 
-void AZeroGameModeBase::ZeroExtensionScope_UnregisterExtender(UZeroExtenderBase* extender, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_UnregisterExtender(UZExtenderBase* extender, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtender(extender, channel);
 }
 
-void AZeroGameModeBase::ZeroExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtendee(extendee, channel);
 }
 
-void AZeroGameModeBase::ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel)
+void AZeroGameModeBase::ExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtendee(extendee, destroying, channel);
 }

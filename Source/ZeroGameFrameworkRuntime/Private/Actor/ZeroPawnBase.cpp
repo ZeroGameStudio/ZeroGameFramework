@@ -5,7 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "ZActorExtensionHelper.h"
 #include "Emit/IZSharpFieldRegistry.h"
-#include "Scope/ZeroExtensionScope.h"
+#include "Scope/ZExtensionScope.h"
 
 AZeroPawnBase::AZeroPawnBase()
 	: bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
@@ -66,9 +66,9 @@ void AZeroPawnBase::PossessedBy(AController* newController)
 {
 	Super::PossessedBy(newController);
 	
-	if (auto scope = Cast<IZeroExtensionScope>(Controller))
+	if (auto scope = Cast<IZExtensionScope>(Controller))
 	{
-		scope->ZeroExtensionScope_RegisterExtendee(this);
+		scope->ExtensionScope_RegisterExtendee(this);
 	}
 }
 
@@ -76,9 +76,9 @@ void AZeroPawnBase::UnPossessed()
 {
 	if (!bPendingDestroy)
 	{
-		if (auto scope = Cast<IZeroExtensionScope>(Controller))
+		if (auto scope = Cast<IZExtensionScope>(Controller))
 		{
-			scope->ZeroExtensionScope_UnregisterExtendee(this, false);
+			scope->ExtensionScope_UnregisterExtendee(this, false);
 		}
 	}
 	
@@ -89,9 +89,9 @@ void AZeroPawnBase::DetachFromControllerPendingDestroy()
 {
 	bPendingDestroy = true;
 
-	if (auto scope = Cast<IZeroExtensionScope>(Controller))
+	if (auto scope = Cast<IZExtensionScope>(Controller))
 	{
-		scope->ZeroExtensionScope_UnregisterExtendee(this, true);
+		scope->ExtensionScope_UnregisterExtendee(this, true);
 	}
 	
 	Super::DetachFromControllerPendingDestroy();

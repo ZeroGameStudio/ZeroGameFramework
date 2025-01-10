@@ -11,22 +11,22 @@ AZeroClientGameControllerBase::AZeroClientGameControllerBase()
 {
 }
 
-void AZeroClientGameControllerBase::ZeroExtensionScope_RegisterExtender(UZeroExtenderBase* extender, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_RegisterExtender(UZExtenderBase* extender, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtender(extender, channel);
 }
 
-void AZeroClientGameControllerBase::ZeroExtensionScope_UnregisterExtender(UZeroExtenderBase* extender, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBase* extender, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtender(extender, channel);
 }
 
-void AZeroClientGameControllerBase::ZeroExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)
 {
 	ExtensionScope.RegisterExtendee(extendee, channel);
 }
 
-void AZeroClientGameControllerBase::ZeroExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel)
+void AZeroClientGameControllerBase::ExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel)
 {
 	ExtensionScope.UnregisterExtendee(extendee, destroying, channel);
 }
