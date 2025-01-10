@@ -92,6 +92,7 @@ void AZeroPawnBase::DetachFromControllerPendingDestroy()
 	{
 		bPendingDestroy = true;
 
+		// IMPORTANT: This must be done before we call super because we need pointer to old controller.
 		if (auto scope = Cast<IZExtensionScope>(Controller))
 		{
 			scope->ExtensionScope_UnregisterExtendee(this, true);
