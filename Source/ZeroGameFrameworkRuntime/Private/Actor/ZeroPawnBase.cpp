@@ -9,6 +9,7 @@
 
 AZeroPawnBase::AZeroPawnBase()
 	: bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
+	, bPendingDestroy(false)
 {
 }
 
