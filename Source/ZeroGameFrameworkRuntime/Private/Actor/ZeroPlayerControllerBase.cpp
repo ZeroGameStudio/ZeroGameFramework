@@ -18,14 +18,14 @@ void AZeroPlayerControllerBase::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 	ZSharpReplicatedObject_GetLifetimeReplicatedProps(outLifetimeProps);
 }
 
-void AZeroPlayerControllerBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
+void AZeroPlayerControllerBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender)
 {
-	ExtensionScope.RegisterExtender(extender, channel);
+	ExtensionScope.RegisterExtender(extender);
 }
 
-void AZeroPlayerControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
+void AZeroPlayerControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender)
 {
-	ExtensionScope.UnregisterExtender(extender, channel);
+	ExtensionScope.UnregisterExtender(extender);
 }
 
 void AZeroPlayerControllerBase::ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)

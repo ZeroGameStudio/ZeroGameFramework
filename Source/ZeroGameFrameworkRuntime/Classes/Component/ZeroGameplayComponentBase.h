@@ -6,7 +6,7 @@
 
 #include "ZeroGameplayComponentBase.generated.h"
 
-UCLASS(Abstract)
+UCLASS(Abstract, Blueprintable)
 class ZEROGAMEFRAMEWORKRUNTIME_API UZeroGameplayComponentBase : public UActorComponent, public IZSharpReplicatedObject
 {
 	GENERATED_BODY()

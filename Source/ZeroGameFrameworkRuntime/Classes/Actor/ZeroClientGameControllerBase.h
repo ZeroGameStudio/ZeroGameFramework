@@ -16,8 +16,8 @@ public:
 	AZeroClientGameControllerBase();
 
 public:
-	virtual void ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
-	virtual void ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel = FGameplayTag::EmptyTag) override;
+	virtual void ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender) override;
+	virtual void ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender) override;
 	virtual void ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 	virtual void ExtensionScope_UnregisterExtendee(UObject* extendee, bool destroying, FGameplayTag channel = FGameplayTag::EmptyTag) override;
 

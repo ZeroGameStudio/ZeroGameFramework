@@ -10,14 +10,14 @@ AZeroAIControllerBase::AZeroAIControllerBase()
 {
 }
 
-void AZeroAIControllerBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
+void AZeroAIControllerBase::ExtensionScope_RegisterExtender(UZExtenderBaseInterface* extender)
 {
-	ExtensionScope.RegisterExtender(extender, channel);
+	ExtensionScope.RegisterExtender(extender);
 }
 
-void AZeroAIControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender, FGameplayTag channel)
+void AZeroAIControllerBase::ExtensionScope_UnregisterExtender(UZExtenderBaseInterface* extender)
 {
-	ExtensionScope.UnregisterExtender(extender, channel);
+	ExtensionScope.UnregisterExtender(extender);
 }
 
 void AZeroAIControllerBase::ExtensionScope_RegisterExtendee(UObject* extendee, FGameplayTag channel)
