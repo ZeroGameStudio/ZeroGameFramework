@@ -6,6 +6,7 @@
 #include "ZActorExtensionHelper.h"
 #include "Emit/IZSharpFieldRegistry.h"
 #include "Scope/ZExtensionScope.h"
+#include "Scope/ZPlayerExtensionScope.h"
 
 AZeroPawnBase::AZeroPawnBase()
 	: bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
@@ -66,10 +67,21 @@ void AZeroPawnBase::EndPlay(const EEndPlayReason::Type endPlayReason)
 void AZeroPawnBase::PossessedBy(AController* newController)
 {
 	Super::PossessedBy(newController);
-	
-	if (auto scope = Cast<IZExtensionScope>(newController))
+
+	if (auto pc = Cast<APlayerController>(newController))
 	{
-		scope->ExtensionScope_RegisterExtendee(this);
+		if (ULocalPlayer* player = pc->GetLocalPlayer())
+		{
+			if (auto playerScope = player->GetSubsystem<UZPlayerExtensionScope>())
+			{
+				playerScope->ExtensionScope_RegisterExtendee(this);
+			}
+		}
+	}
+	
+	if (auto controllerScope = Cast<IZExtensionScope>(newController))
+	{
+		controllerScope->ExtensionScope_RegisterExtendee(this);
 	}
 }
 
@@ -78,10 +90,7 @@ void AZeroPawnBase::UnPossessed()
 	if (!bPendingDestroy)
 	{
 		// IMPORTANT: This must be done before we call super because we need pointer to old controller.
-		if (auto scope = Cast<IZExtensionScope>(Controller))
-		{
-			scope->ExtensionScope_UnregisterExtendee(this, false);
-		}
+		UnregisterExtendeeFromController(false);
 	}
 
 	Super::UnPossessed();
@@ -94,13 +103,29 @@ void AZeroPawnBase::DetachFromControllerPendingDestroy()
 		bPendingDestroy = true;
 
 		// IMPORTANT: This must be done before we call super because we need pointer to old controller.
-		if (auto scope = Cast<IZExtensionScope>(Controller))
-		{
-			scope->ExtensionScope_UnregisterExtendee(this, true);
-		}
+		UnregisterExtendeeFromController(true);
 	}
 	
 	Super::DetachFromControllerPendingDestroy();
+}
+
+void AZeroPawnBase::UnregisterExtendeeFromController(bool destroying)
+{
+	if (auto controllerScope = Cast<IZExtensionScope>(Controller))
+	{
+		controllerScope->ExtensionScope_UnregisterExtendee(this, destroying);
+	}
+	
+	if (auto pc = Cast<APlayerController>(Controller))
+	{
+		if (ULocalPlayer* player = pc->GetLocalPlayer())
+		{
+			if (auto playerScope = player->GetSubsystem<UZPlayerExtensionScope>())
+			{
+				playerScope->ExtensionScope_UnregisterExtendee(this, destroying);
+			}
+		}
+	}
 }
 
 

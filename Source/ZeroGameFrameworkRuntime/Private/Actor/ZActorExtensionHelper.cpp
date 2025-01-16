@@ -6,6 +6,8 @@
 #include "Actor/ZeroClientGameControllerSubsystem.h"
 #include "Extension/ZeroGameFrameworkExtensionChannels.h"
 #include "Scope/ZEngineExtensionScope.h"
+#include "Scope/ZGameExtensionScope.h"
+#include "Scope/ZWorldExtensionScope.h"
 
 void ZGF::FZActorExtensionHelper::RegisterInitializeComponentsChannel(AActor* extendee)
 {
@@ -49,6 +51,15 @@ void ZGF::FZActorExtensionHelper::UnregisterOnEndPlay(AActor* extendee)
 		gameModeScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
 	}
 
+	if (auto worldScope = world->GetSubsystem<UZWorldExtensionScope>())
+	{
+		worldScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
+		worldScope->ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
+	}
+
+	UZGameExtensionScope::Get(world->GetGameInstance()).ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
+	UZGameExtensionScope::Get(world->GetGameInstance()).ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
+
 	UZEngineExtensionScope::Get().ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorBeginPlay);
 	UZEngineExtensionScope::Get().ExtensionScope_UnregisterExtendee(extendee, true, TAG_ExtensionChannel_ActorInitializeComponents);
 }
@@ -72,7 +83,13 @@ bool ZGF::FZActorExtensionHelper::IsGameActor(AActor* extendee, UWorld*& world)
 void ZGF::FZActorExtensionHelper::RegisterExtendee(AActor* extendee, FGameplayTag channel, UWorld* world)
 {
 	UZEngineExtensionScope::Get().ExtensionScope_RegisterExtendee(extendee, channel);
+	UZGameExtensionScope::Get(world->GetGameInstance()).ExtensionScope_RegisterExtendee(extendee, channel);
 
+	if (auto worldScope = world->GetSubsystem<UZWorldExtensionScope>())
+	{
+		worldScope->ExtensionScope_RegisterExtendee(extendee, channel);
+	}
+	
 	if (auto gameModeScope = Cast<IZExtensionScope>(world->GetAuthGameMode()))
 	{
 		gameModeScope->ExtensionScope_RegisterExtendee(extendee, channel);

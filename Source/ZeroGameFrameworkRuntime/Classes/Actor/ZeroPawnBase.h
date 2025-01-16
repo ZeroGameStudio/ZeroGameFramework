@@ -34,6 +34,9 @@ protected:
 	void ScriptSetupInputComponent(UEnhancedInputComponent* component);
 
 private:
+	void UnregisterExtendeeFromController(bool destroying);
+
+private:
 	bool bHasZSharpTick;
 	
 	bool bPendingDestroy;
