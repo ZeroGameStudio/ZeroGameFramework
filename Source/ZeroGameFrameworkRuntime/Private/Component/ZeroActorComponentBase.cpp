@@ -101,7 +101,7 @@ void UZeroActorComponentBase::Activate(bool reset)
 void UZeroActorComponentBase::Deactivate()
 {
 	// We want to call ReceiveDeactivate() between SetActiveFlag() and OnComponentDeactivated so we directly rewrite this function.
-	if (ShouldActivate()==false)
+	if (ShouldActivate())
 	{
 		SetComponentTickEnabled(false);
 		SetActiveFlag(false);
