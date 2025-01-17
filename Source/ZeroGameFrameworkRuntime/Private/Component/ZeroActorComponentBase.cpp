@@ -36,6 +36,34 @@ bool UZeroActorComponentBase::HasAuthority() const
 	return owner && owner->HasAuthority();
 }
 
+void UZeroActorComponentBase::InitializeComponent()
+{
+	Super::InitializeComponent();
+
+	ReceiveInitialize();
+}
+
+void UZeroActorComponentBase::UninitializeComponent()
+{
+	ReceiveUninitialize();
+	
+	Super::UninitializeComponent();
+}
+
+void UZeroActorComponentBase::OnRegister()
+{
+	Super::OnRegister();
+
+	ReceiveRegister();
+}
+
+void UZeroActorComponentBase::OnUnregister()
+{
+	ReceiveUnregister();
+	
+	Super::OnUnregister();
+}
+
 void UZeroActorComponentBase::BeginPlay()
 {
 	if (bIsZSharpClass)
@@ -44,6 +72,44 @@ void UZeroActorComponentBase::BeginPlay()
 	}
 	
 	Super::BeginPlay();
+}
+
+void UZeroActorComponentBase::EndPlay(const EEndPlayReason::Type endPlayReason)
+{
+	if (!HasAnyFlags(RF_BeginDestroyed) && !IsUnreachable() && bIsZSharpClass)
+	{
+		ReceiveEndPlay(endPlayReason);
+	}
+	
+	Super::EndPlay(endPlayReason);
+}
+
+void UZeroActorComponentBase::Activate(bool reset)
+{
+	// We want to call ReceiveActivate() between SetActiveFlag() and OnComponentActivated so we directly rewrite this function.
+	if (reset || ShouldActivate())
+	{
+		SetComponentTickEnabled(true);
+		SetActiveFlag(true);
+
+		ReceiveActivate();
+
+		OnComponentActivated.Broadcast(this, reset);
+	}
+}
+
+void UZeroActorComponentBase::Deactivate()
+{
+	// We want to call ReceiveDeactivate() between SetActiveFlag() and OnComponentDeactivated so we directly rewrite this function.
+	if (ShouldActivate()==false)
+	{
+		SetComponentTickEnabled(false);
+		SetActiveFlag(false);
+
+		ReceiveDeactivate();
+
+		OnComponentDeactivated.Broadcast(this);
+	}
 }
 
 void UZeroActorComponentBase::TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
@@ -56,16 +122,6 @@ void UZeroActorComponentBase::TickComponent(float deltaTime, ELevelTick tickType
 	}
 	
 	Super::TickComponent(deltaTime, tickType, thisTickFunction);
-}
-
-void UZeroActorComponentBase::EndPlay(const EEndPlayReason::Type endPlayReason)
-{
-	if (!HasAnyFlags(RF_BeginDestroyed) && !IsUnreachable() && bIsZSharpClass)
-	{
-		ReceiveEndPlay(endPlayReason);
-	}
-	
-	Super::EndPlay(endPlayReason);
 }
 
 
