@@ -20,10 +20,7 @@ public:
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* playerInputComponent) override;
 	
-	virtual void PreInitializeComponents() override;
-	virtual void BeginPlay() override;
 	virtual void Tick(float deltaSeconds) override;
-	virtual void EndPlay(const EEndPlayReason::Type endPlayReason) override;
 
 	virtual void PossessedBy(AController* newController) override;
 	virtual void UnPossessed() override;

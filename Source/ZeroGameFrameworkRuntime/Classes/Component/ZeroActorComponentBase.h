@@ -4,15 +4,15 @@
 
 #include "ZSharpReplicatedObject.h"
 
-#include "ZeroGameplayComponentBase.generated.h"
+#include "ZeroActorComponentBase.generated.h"
 
 UCLASS(Abstract, Blueprintable)
-class ZEROGAMEFRAMEWORKRUNTIME_API UZeroGameplayComponentBase : public UActorComponent, public IZSharpReplicatedObject
+class ZEROGAMEFRAMEWORKRUNTIME_API UZeroActorComponentBase : public UActorComponent, public IZSharpReplicatedObject
 {
 	GENERATED_BODY()
 
 public:
-	UZeroGameplayComponentBase();
+	UZeroActorComponentBase();
 
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const override;

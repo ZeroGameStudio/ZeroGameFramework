@@ -1,42 +1,42 @@
 ﻿// Copyright Zero Games. All Rights Reserved.
 
-#include "Component/ZeroGameplayComponentBase.h"
+#include "Component/ZeroActorComponentBase.h"
 
 #include "Emit/IZSharpFieldRegistry.h"
 
-UZeroGameplayComponentBase::UZeroGameplayComponentBase()
+UZeroActorComponentBase::UZeroActorComponentBase()
 	: bIsZSharpClass(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(GetClass()))
 	, bHasZSharpTick(ZSharp::IZSharpFieldRegistry::Get().IsZSharpClass(FindFunctionChecked(GET_FUNCTION_NAME_CHECKED(ThisClass, ReceiveTick))->GetOuterUClass()))
 {
 
 }
 
-void UZeroGameplayComponentBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const
+void UZeroActorComponentBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(outLifetimeProps);
 
 	ZSharpReplicatedObject_GetLifetimeReplicatedProps(outLifetimeProps);
 }
 
-ENetRole UZeroGameplayComponentBase::GetLocalRole() const
+ENetRole UZeroActorComponentBase::GetLocalRole() const
 {
 	const AActor* owner = GetOwner();
 	return owner ? owner->GetLocalRole() : ROLE_None;
 }
 
-ENetRole UZeroGameplayComponentBase::GetRemoteRole() const
+ENetRole UZeroActorComponentBase::GetRemoteRole() const
 {
 	const AActor* owner = GetOwner();
 	return owner ? owner->GetRemoteRole() : ROLE_None;
 }
 
-bool UZeroGameplayComponentBase::HasAuthority() const
+bool UZeroActorComponentBase::HasAuthority() const
 {
 	const AActor* owner = GetOwner();
 	return owner && owner->HasAuthority();
 }
 
-void UZeroGameplayComponentBase::BeginPlay()
+void UZeroActorComponentBase::BeginPlay()
 {
 	if (bIsZSharpClass)
 	{
@@ -46,7 +46,7 @@ void UZeroGameplayComponentBase::BeginPlay()
 	Super::BeginPlay();
 }
 
-void UZeroGameplayComponentBase::TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
+void UZeroActorComponentBase::TickComponent(float deltaTime, ELevelTick tickType, FActorComponentTickFunction* thisTickFunction)
 {
 	if (bIsZSharpClass && bHasZSharpTick)
 	{
@@ -58,7 +58,7 @@ void UZeroGameplayComponentBase::TickComponent(float deltaTime, ELevelTick tickT
 	Super::TickComponent(deltaTime, tickType, thisTickFunction);
 }
 
-void UZeroGameplayComponentBase::EndPlay(const EEndPlayReason::Type endPlayReason)
+void UZeroActorComponentBase::EndPlay(const EEndPlayReason::Type endPlayReason)
 {
 	if (!HasAnyFlags(RF_BeginDestroyed) && !IsUnreachable() && bIsZSharpClass)
 	{

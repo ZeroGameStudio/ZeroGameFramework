@@ -3,7 +3,6 @@
 #include "Actor/ZeroPawnBase.h"
 
 #include "EnhancedInputComponent.h"
-#include "ZActorExtensionHelper.h"
 #include "Emit/IZSharpFieldRegistry.h"
 #include "Scope/ZExtensionScope.h"
 #include "Scope/ZPlayerExtensionScope.h"
@@ -31,20 +30,6 @@ void AZeroPawnBase::SetupPlayerInputComponent(UInputComponent* playerInputCompon
 	}
 }
 
-void AZeroPawnBase::PreInitializeComponents()
-{
-	Super::PreInitializeComponents();
-
-	ZGF::FZActorExtensionHelper::RegisterInitializeComponentsChannel(this);
-}
-
-void AZeroPawnBase::BeginPlay()
-{
-	Super::BeginPlay();
-
-	ZGF::FZActorExtensionHelper::RegisterBeginPlayChannel(this);
-}
-
 void AZeroPawnBase::Tick(float deltaSeconds)
 {
 	if (bHasZSharpTick)
@@ -55,13 +40,6 @@ void AZeroPawnBase::Tick(float deltaSeconds)
 	}
 	
 	Super::Tick(deltaSeconds);
-}
-
-void AZeroPawnBase::EndPlay(const EEndPlayReason::Type endPlayReason)
-{
-	ZGF::FZActorExtensionHelper::UnregisterOnEndPlay(this);
-	
-	Super::EndPlay(endPlayReason);
 }
 
 void AZeroPawnBase::PossessedBy(AController* newController)
