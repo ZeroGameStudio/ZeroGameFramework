@@ -6,7 +6,7 @@ public class ZeroGameFrameworkRuntime : ModuleRules
 {
 	public ZeroGameFrameworkRuntime(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange
 		(

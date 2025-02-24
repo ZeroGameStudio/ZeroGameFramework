@@ -6,7 +6,7 @@ public class ZeroGameFrameworkEditor : ModuleRules
 {
 	public ZeroGameFrameworkEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange
 		(
